@@ -1,0 +1,24 @@
+<clr-main-container>
+  <clr-header>
+    <div class="branding">
+      <a routerLink="/home">
+        <clr-icon shape="lightbulb" size="36"></clr-icon>
+        <span class="title">XML Project</span>
+      </a>
+    </div>
+    <div class="header-nav" [clr-nav-level]="1">
+        <a routerLink="/home" class="active nav-link nav-text">Dashboard</a>
+        <a routerLink="/data" class="nav-link nav-text">Interactive Analytics</a>
+    </div>
+    <!--<div class="header-actions">
+        <a href="javascript://" class="nav-link nav-icon">
+            <clr-icon shape="cog"></clr-icon>
+        </a>
+    </div> -->
+  </clr-header>
+  <div class="content-container">
+      <main class="content-area">
+        <router-outlet></router-outlet>
+      </main>
+  </div>
+</clr-main-container>
