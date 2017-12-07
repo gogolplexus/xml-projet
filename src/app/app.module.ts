@@ -5,9 +5,13 @@ import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { DataComponent } from './data/data.component';
+import { TeamComponent } from './team/team.component';
+import { LabsComponent } from './labs/labs.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'team', component: TeamComponent },
+  { path: 'labs', component: LabsComponent },
   { path: 'data', component: DataComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
@@ -16,7 +20,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    DataComponent
+    DataComponent,
+    TeamComponent,
+    LabsComponent
   ],
   imports: [
     ClarityModule.forRoot(),

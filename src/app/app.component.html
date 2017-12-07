@@ -1,14 +1,16 @@
 <clr-main-container>
   <clr-header>
     <div class="branding">
-      <a routerLink="/home">
+      <a routerLink="/home" title="XML Project">
         <clr-icon shape="lightbulb" size="36"></clr-icon>
-        <span class="title">XML Project</span>
+        <span class="title">{{ title }}</span>
       </a>
     </div>
     <div class="header-nav" [clr-nav-level]="1">
-        <a routerLink="/home" class="nav-link nav-text">Dashboard</a>
-        <a routerLink="/data" class="nav-link nav-text">Interactive Analytics</a>
+        <a routerLink="/home" class="nav-link nav-text" title="Accueil">Accueil</a>
+        <a routerLink="/team" class="nav-link nav-text" title="Equipes">Liste des équipes</a>
+        <a routerLink="/labs" class="nav-link nav-text" title="Centres de recherches">Liste des centres de recherches</a>
+        <a routerLink="/data" class="nav-link nav-text" title="Statistiques">Statistiques</a>
     </div>
     <!--<div class="header-actions">
         <a href="javascript://" class="nav-link nav-icon">
