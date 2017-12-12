@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { COORD } from './labs-data';
 
 @Component({
   selector: 'app-labs',
@@ -7,8 +8,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./labs.component.css']
 })
 export class LabsComponent implements OnInit {
+  init_lat = 50;
+  init_lng = 70;
 
-  constructor(private router:Router) { }
+  coord;
+
+  constructor(private router:Router) {
+    this.coord = COORD;
+  }
 
   ngOnInit() {
     this.feedback();
@@ -25,5 +32,4 @@ export class LabsComponent implements OnInit {
       }
     }
   }
-
 }

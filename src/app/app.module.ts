@@ -8,6 +8,9 @@ import { DataComponent } from './data/data.component';
 import { TeamComponent } from './team/team.component';
 import { LabsComponent } from './labs/labs.component';
 
+import { AgmCoreModule } from '@agm/core';
+import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
+
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'team', component: TeamComponent },
@@ -25,6 +28,10 @@ const appRoutes: Routes = [
     LabsComponent
   ],
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyB4BA3XY4OQiyPZ8hdRVEU8qABkvLej8xc'
+    }),
+    AgmSnazzyInfoWindowModule,
     ClarityModule.forRoot(),
     RouterModule.forRoot(
       appRoutes,
