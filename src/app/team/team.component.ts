@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LABS, TEAMS } from './team-data'
 
 @Component({
   selector: 'app-team',
@@ -7,8 +8,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./team.component.css']
 })
 export class TeamComponent implements OnInit {
+  labs;
+  teams;
 
-  constructor(private router:Router) { }
+  constructor(private router:Router) {
+    this.labs = LABS;
+    this.teams = TEAMS;
+  }
 
   ngOnInit() {
     this.feedback();

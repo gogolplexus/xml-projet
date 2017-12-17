@@ -1,1 +1,25 @@
-<h1>Team page</h1>
+<h1>Liste des équipes par centres de recherches</h1>
+
+<div *ngFor="let lab of labs">
+    <h3>{{ lab.name }}</h3>
+    <div class="row">
+        <ng-template ngFor let-team [ngForOf]="teams" let-i="index">
+            <ng-template [ngIf]="lab.id == team.lab">
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <h3 class="card-title">{{ team.name }}</h3>
+                            <p class="card-text">
+                                {{ team.desc }}
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="..." class="btn btn-sm btn-link">Action 1</a>
+                            <span>{{ team.lab }}</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </ng-template>
+    </div>
+</div>
