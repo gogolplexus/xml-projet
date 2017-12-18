@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ClarityModule } from "clarity-angular";
+import { SharedModule } from './shared.module';
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
     LabsComponent
   ],
   imports: [
+    SharedModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB4BA3XY4OQiyPZ8hdRVEU8qABkvLej8xc'
     }),

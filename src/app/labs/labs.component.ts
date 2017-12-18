@@ -10,11 +10,13 @@ import { LABS } from './labs-data';
 export class LabsComponent implements OnInit {
   init_lat = 50;
   init_lng = 70;
+  markers;
 
   labs;
 
   constructor(private router:Router) {
     this.labs = LABS;
+    this.markers = document.getElementsByTagName("agm-marker");
   }
 
   ngOnInit() {
@@ -31,5 +33,10 @@ export class LabsComponent implements OnInit {
         menu_list[index].className = 'nav-link nav-text';
       }
     }
+  }
+
+  targetMap(event) {
+    console.log(this.markers);
+    //this.markers[0].opacity = 0;
   }
 }

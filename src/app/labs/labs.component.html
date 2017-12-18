@@ -12,7 +12,7 @@
         <clr-stack-view>
             <clr-stack-block *ngFor="let lab of labs">
                 <clr-stack-label>{{ lab.name }}</clr-stack-label>
-                <clr-stack-content>{{ lab.name }}</clr-stack-content>
+                <clr-stack-content><span (click)="targetMap($event)" [coordlng]="lab.lng" [coordlat]="lab.lat">Montrer sur la carte</span></clr-stack-content>
                 <clr-stack-block>
                     <clr-stack-label>Equipes</clr-stack-label>
                     <clr-stack-content>{{ lab.nb_team }}</clr-stack-content>
