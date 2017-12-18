@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LABS, TEAMS } from './team-data'
-import { fadeInAnimation } from '../_animations/index';
 
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html',
-  styleUrls: ['./team.component.css'],
-  // make fade in animation available to this component
-  //animations: [fadeInAnimation],
-  // attach the fade in animation to the host (root) element of this component
-  //host: { '[@fadeInAnimation]': '' }
+  styleUrls: ['./team.component.css']
 })
 export class TeamComponent implements OnInit {
   labs;
