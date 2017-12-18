@@ -8,15 +8,15 @@ import { LABS } from './labs-data';
   styleUrls: ['./labs.component.css']
 })
 export class LabsComponent implements OnInit {
-  init_lat = 50;
-  init_lng = 70;
-  markers;
+  init_lat;
+  init_lng;
 
   labs;
 
   constructor(private router:Router) {
     this.labs = LABS;
-    this.markers = document.getElementsByTagName("agm-marker");
+    this.init_lat = this.labs[0].lat;
+    this.init_lng = this.labs[0].lng;
   }
 
   ngOnInit() {
@@ -33,10 +33,5 @@ export class LabsComponent implements OnInit {
         menu_list[index].className = 'nav-link nav-text';
       }
     }
-  }
-
-  targetMap(event) {
-    console.log(this.markers);
-    //this.markers[0].opacity = 0;
   }
 }
