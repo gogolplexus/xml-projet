@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { fadeInAnimation } from '../_animations/index';
 
 @Component({
   selector: 'app-data',
   templateUrl: './data.component.html',
-  styleUrls: ['./data.component.css']
+  styleUrls: ['./data.component.css'],
+  // make fade in animation available to this component
+  //animations: [fadeInAnimation],
+  // attach the fade in animation to the host (root) element of this component
+  //host: { '[@fadeInAnimation]': '' }
 })
 export class DataComponent implements OnInit {
 

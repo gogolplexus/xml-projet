@@ -14,10 +14,10 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 
 const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'team', component: TeamComponent },
-  { path: 'labs', component: LabsComponent },
-  { path: 'data', component: DataComponent },
+  { path: 'home', component: HomeComponent, data: { state: 'home' } },
+  { path: 'team', component: TeamComponent, data: { state: 'team' } },
+  { path: 'labs', component: LabsComponent, data: { state: 'labs' } },
+  { path: 'data', component: DataComponent, data: { state: 'data' } },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
