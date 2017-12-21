@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { single, multi } from './data';
 
 @Component({
   selector: 'app-data',
@@ -8,7 +10,30 @@ import { Router } from '@angular/router';
 })
 export class DataComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router:Router) {
+    Object.assign(this, {single, multi})  
+  }
+  
+  single: any[];
+  multi: any[];
+
+  view: any[] = [700, 400];
+
+  // options
+  showLegend = true;
+
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+
+  // pie
+  showLabels = true;
+  explodeSlices = false;
+  doughnut = false;
+  
+  onSelect(event) {
+    console.log(event);
+  }
 
   ngOnInit() {
     this.feedback();
@@ -25,5 +50,4 @@ export class DataComponent implements OnInit {
       }
     }
   }
-
 }

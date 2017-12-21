@@ -13,6 +13,8 @@ import { LabsComponent } from './labs/labs.component';
 import { AgmCoreModule } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, data: { state: 'home' } },
   { path: 'team', component: TeamComponent, data: { state: 'team' } },
@@ -35,6 +37,7 @@ const appRoutes: Routes = [
       apiKey: 'AIzaSyB4BA3XY4OQiyPZ8hdRVEU8qABkvLej8xc'
     }),
     AgmSnazzyInfoWindowModule,
+    NgxChartsModule,
     ClarityModule.forRoot(),
     RouterModule.forRoot(
       appRoutes,
@@ -46,4 +49,5 @@ const appRoutes: Routes = [
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

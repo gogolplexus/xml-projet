@@ -1,1 +1,18 @@
 <h1>Data page</h1>
+
+<div class="row">
+    <div class="col-xs-9">
+        <div style="height: 300px;">
+            <ngx-charts-pie-chart
+            [scheme]="colorScheme"
+            [results]="single"
+            [legend]="showLegend"
+            [explodeSlices]="explodeSlices"
+            [labels]="showLabels"
+            [doughnut]="doughnut"
+            [gradient]="gradient"
+            (select)="onSelect($event)">
+            </ngx-charts-pie-chart>
+        </div>
+    </div>
+</div>
