@@ -11,16 +11,28 @@ export class LabsComponent implements OnInit {
   init_lat;
   init_lng;
 
+  labs_data = LABS;
   labs;
+  cpt_teams;
 
-  constructor(private router:Router) {
-    this.labs = LABS;
-    this.init_lat = this.labs[0].lat;
-    this.init_lng = this.labs[0].lng;
-  }
+  constructor(private router:Router, private _LABS: LABS) {}
 
   ngOnInit() {
     this.feedback();
+    this.getLabs();
+    //this.getTeamPerLabs();
+  }
+
+  getLabs() {
+    this._LABS.getLabs().subscribe(
+      data => this.labs = data,
+      err => console.error(err),
+      () => {
+        this.labs = this.labs.cr,
+        this.init_lat = this.labs[0].adressegeographique.latitude,
+        this.init_lng = this.labs[0].adressegeographique.longitude
+      }
+    );
   }
 
   feedback() {

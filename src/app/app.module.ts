@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { ClarityModule } from "clarity-angular";
 import { SharedModule } from './shared.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,8 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+
+import {LABS} from './labs/labs-data';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, data: { state: 'home' } },
@@ -32,6 +35,7 @@ const appRoutes: Routes = [
     LabsComponent
   ],
   imports: [
+    HttpClientModule,
     SharedModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB4BA3XY4OQiyPZ8hdRVEU8qABkvLej8xc'
@@ -46,7 +50,7 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [LABS],
   bootstrap: [AppComponent]
 })
 
