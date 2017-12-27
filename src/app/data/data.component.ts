@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { single, multi } from './data';
+import { STATS } from './stats_data';
 
 @Component({
   selector: 'app-data',
@@ -9,6 +10,8 @@ import { single, multi } from './data';
   styleUrls: ['./data.component.css']
 })
 export class DataComponent implements OnInit {
+
+  data = STATS;
 
   constructor(private router:Router) {
     Object.assign(this, {single, multi})  
