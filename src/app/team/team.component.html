@@ -1,25 +1,136 @@
-<h1>Liste des équipes par centres de recherches</h1>
+<div class="row">
+    <div class="col-xs-12">
+        <h1>Liste des équipes par centres de recherches &nbsp;&nbsp; <clr-icon shape="share" size="36"></clr-icon></h1>
+    </div>
+</div>
 
-<div *ngFor="let lab of labs">
-    <h3>{{ lab.name }}</h3>
-    <div class="row">
+<div class="row">
+    <div class="col-xs-12 col-sm-8">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+</div>
+
+<div class="row flex-items-xs-middle">
+    <div class="col-xs-12 col-sm-12 col-md-4">
+        <h3>Filtres disponibles :</h3>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        <clr-dropdown style="margin-top: 24px;">
+            <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
+                Nom de centre de recherche
+                <clr-icon shape="caret down"></clr-icon>
+            </button>
+            <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
+                <label class="dropdown-header">Liste des centres</label>
+                <button type="button" *ngFor="let lab of labs" clrDropdownItem (click)="selectLab(lab)">{{ lab.adressegeographique.libelle }}</button>
+            </clr-dropdown-menu>
+            <clr-alert *ngIf="isFilter['lab_name']" (clrAlertClosedChange)="onCloseLab()">
+                <div class="alert-item">
+                    <span class="alert-text">
+                        Centre s&eacute;lectionn&eacute; : {{ filter_lab.name }}
+                    </span>
+                </div>
+            </clr-alert>
+        </clr-dropdown>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        <clr-dropdown style="margin-top: 24px;">
+            <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
+                Domaine de recherche
+                <clr-icon shape="caret down"></clr-icon>
+            </button>
+            <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
+                <label class="dropdown-header">Liste des domaines</label>
+                <button type="button" *ngFor="let lab of labs" clrDropdownItem>{{ lab.adressegeographique.libelle }}</button>
+            </clr-dropdown-menu>
+        </clr-dropdown>
+    </div>
+</div>
+
+<div class="row margin-height">
+    <div style="width:100%;text-align:center;"><span class="spinner"></span></div>
+    <div *ngIf="isFilter['lab_name']; then filtered else normal"></div>
+    <ng-template #filtered>
         <ng-template ngFor let-team [ngForOf]="teams" let-i="index">
-            <ng-template [ngIf]="lab.id == team.lab">
-                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <ng-template [ngIf]="team.adressegeographique.cri.siid == filter_lab.id">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <div class="card">
                         <div class="card-block">
-                            <h3 class="card-title">{{ team.name }}</h3>
-                            <p class="card-text">
-                                {{ team.desc }}
-                            </p>
+                            <h3 class="card-title">{{ team.sigle }}&nbsp;&nbsp;
+                                <span class="label">
+                                    CRI : {{ team.adressegeographique.cri.siid }}
+                                    <a href="..." role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm">
+                                        <clr-icon shape="info-circle" size="24"></clr-icon>
+                                        <span class="tooltip-content">{{ team.adressegeographique.libelle }}</span>
+                                    </a>
+                                </span>
+                            </h3>
+                            <p class="card-text">Responsable : {{ team.personne.nom }} {{ team.personne.prenom }}</p>
+                            <p class="card-text">Adresse : {{ team.adressegeographique.adresse }}</p>
                         </div>
                         <div class="card-footer">
-                            <a href="..." class="btn btn-sm btn-link">Action 1</a>
-                            <span>{{ team.lab }}</span>
+                            <button class="btn btn-sm btn-link" (click)="showModal(team)">Consulter la liste de membres</button>
+                            <span *ngIf="loading" class="spinner spinner-inline"></span>
                         </div>
                     </div>
                 </div>
             </ng-template>
         </ng-template>
-    </div>
+    </ng-template>
+
+    <ng-template #normal>
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12" *ngFor="let team of teams">
+            <div class="card">
+                <div class="card-block">
+                    <h3 class="card-title">{{ team.sigle }}&nbsp;&nbsp;
+                        <span class="label">
+                            CRI : {{ team.adressegeographique.cri.siid }}
+                            <a href="..." role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm">
+                                <clr-icon shape="info-circle" size="24"></clr-icon>
+                                <span class="tooltip-content">{{ team.adressegeographique.libelle }}</span>
+                            </a>
+                        </span>
+                    </h3>
+                    <p class="card-text">Responsable : {{ team.personne.nom }} {{ team.personne.prenom }}</p>
+                    <p class="card-text">Adresse : {{ team.adressegeographique.adresse }}</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-link" (click)="showModal(team)">Consulter la liste de membres</button>
+                    <span *ngIf="loading" class="spinner spinner-inline"></span>
+                </div>
+            </div>
+        </div>
+    </ng-template>
 </div>
+
+<clr-modal *ngIf="opened" [(clrModalOpen)]="opened" [clrModalStaticBackdrop]="true" [clrModalSize]="'xl'">
+    <h3 class="modal-title">Equipe : {{ selectedTeamName }}</h3>
+    <div class="modal-body">
+        <p>Membres de l&apos;&eacute;quipe :</p>
+        <clr-datagrid>
+            <clr-dg-column>ID</clr-dg-column>
+            <clr-dg-column>Nom</clr-dg-column>
+            <clr-dg-column>Pr&eacute;nom</clr-dg-column>
+            <clr-dg-column>Fonctions</clr-dg-column>
+            <clr-dg-column>Publications</clr-dg-column>
+
+            <clr-dg-row *clrDgItems="let member of selectedTeam.persons">
+                <clr-dg-cell>{{member.person.key}}</clr-dg-cell>
+                <clr-dg-cell>{{member.person.firstname}}</clr-dg-cell>
+                <clr-dg-cell>{{member.person.lastname}}</clr-dg-cell>
+                <clr-dg-cell>{{member.person.moreinfo}}</clr-dg-cell>
+                <clr-dg-cell><a class="btn btn-sm btn-link" title="Consulter les publications de cette personne">Consulter les publications</a></clr-dg-cell>
+            </clr-dg-row>
+
+            <clr-dg-footer>
+                {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} de {{pagination.totalItems}} membres
+                <clr-dg-pagination #pagination [clrDgPageSize]="5" [clrDgTotalItems]="selectedTeam.persons.length"></clr-dg-pagination>
+            </clr-dg-footer>
+        </clr-datagrid>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="opened = false">
+            Fermer
+        </button>
+    </div>
+</clr-modal>

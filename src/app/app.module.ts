@@ -17,6 +17,7 @@ import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 import {LABS} from './labs/labs-data';
+import {TEAMS} from './team/team-data';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, data: { state: 'home' } },
@@ -45,12 +46,12 @@ const appRoutes: Routes = [
     ClarityModule.forRoot(),
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      { enableTracing: false } // <-- debugging purposes only
     ),
     BrowserModule,
     BrowserAnimationsModule
   ],
-  providers: [LABS],
+  providers: [LABS, TEAMS],
   bootstrap: [AppComponent]
 })
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LABS, TEAMS } from './team-data'
+import { TEAMS } from './team-data';
+import { LABS } from '../labs/labs-data';
 
 @Component({
   selector: 'app-team',
@@ -8,16 +9,86 @@ import { LABS, TEAMS } from './team-data'
   styleUrls: ['./team.component.css']
 })
 export class TeamComponent implements OnInit {
-  labs;
-  teams;
+  //Modal et contenu du modal
+  selectedTeam;
+  selectedTeamName;
+  opened = false;
+  loading = false;
 
-  constructor(private router:Router) {
-    this.labs = LABS;
-    this.teams = TEAMS;
-  }
+  //Liste des labos
+  labs;
+
+  //Liste des équipes
+  teams = [];
+
+  //Gestion des filtres
+  filter_lab;
+  isFilter = {
+    'lab_name': false,
+    'domain': false
+  };
+
+  constructor(private router:Router, private _LABS: LABS, private _TEAMS: TEAMS) {}
 
   ngOnInit() {
     this.feedback();
+    this.getLabs();
+    //this.getTeams();
+  }
+
+  getTeams() {
+    for(var i = 0; i<this.labs.length; i++) {
+      this._TEAMS.getTeams(this.labs[i].adressegeographique.cri.siid).subscribe(
+        data => this.teams = this.teams.concat(data),
+        err => console.error(err),
+        () => {
+          //console.log(this.teams);
+        }
+      );
+    }
+  }
+
+  getLabs() {
+    this._LABS.getLabs().subscribe(
+      data => this.labs = data,
+      err => console.error(err),
+      () => {
+        this.labs = this.labs.cr,
+        this.getTeams();
+        var spinner = document.getElementsByClassName("spinner");
+        spinner[0].outerHTML = "";
+      }
+    );
+  }
+
+  selectLab(data) {
+    this.filter_lab = {
+      id: data.adressegeographique.cri.siid,
+      name: data.adressegeographique.libelle
+    }
+    this.isFilter['lab_name'] = true;
+    //console.log(this.filter_lab);
+  }
+
+  onCloseLab() {
+    this.isFilter['lab_name'] = false;
+    this.filter_lab = {};
+    //console.log(this.isFilter);
+  }
+
+  showModal(team) {
+    this.loading = true;
+    this.selectedTeamName = team.sigle.toLowerCase();
+    this._TEAMS.getTeamMembers(this.selectedTeamName).subscribe(
+      data => this.selectedTeam = data,
+      err => console.error(err),
+      () => {
+        //console.log(this.selectedTeam);
+        this.selectedTeamName = this.selectedTeamName.toUpperCase();
+        this.opened = true;
+        this.loading = false;
+      }
+    );
   }
 
   feedback() {
@@ -31,5 +102,4 @@ export class TeamComponent implements OnInit {
       }
     }
   }
-
 }

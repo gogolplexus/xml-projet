@@ -11,7 +11,7 @@ export class LabsComponent implements OnInit {
   init_lat;
   init_lng;
 
-  labs_data = LABS;
+  //labs_data = LABS;
   labs;
   cpt_teams;
 
@@ -28,6 +28,8 @@ export class LabsComponent implements OnInit {
       data => this.labs = data,
       err => console.error(err),
       () => {
+        var spinner = document.getElementsByClassName("spinner");
+        spinner[0].outerHTML = "";
         this.labs = this.labs.cr,
         this.init_lat = this.labs[0].adressegeographique.latitude,
         this.init_lng = this.labs[0].adressegeographique.longitude
