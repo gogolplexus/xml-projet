@@ -5,3 +5,11 @@
 .label {
     vertical-align: text-bottom;
 }
+
+.tooltip:hover {
+    cursor: pointer;
+}
+
+.card-block {
+    min-height: 200px;
+}

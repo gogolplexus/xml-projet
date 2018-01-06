@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+/* import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { single, multi } from './data';
 import { STATS } from './stats_data';
 
 @Component({
@@ -11,22 +12,21 @@ import { STATS } from './stats_data';
 export class DataComponent implements OnInit {
 
   data = STATS;
-  labs;
-  listingCenter = [];
 
-  constructor(private router:Router, private _STATS: STATS) {}
+  constructor(private router:Router) {
+    Object.assign(this, {single, multi})  
+  }
+  
+  single: any[];
+  multi: any[];
 
   view: any[] = [700, 400];
 
   // options
   showLegend = false;
-  showXAxis = true;
-  showYAxis = true;
-  showXAxisLabel = true;
-  showYAxisLabel = true;
 
   colorScheme = {
-    domain: ['#5AA454', '#f0ad4e', '#C7B42C', '#AAAAAA', '#d9534f', '#5bc0de', '#5cb85c', '#428bca']
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
   // pie
@@ -40,29 +40,6 @@ export class DataComponent implements OnInit {
 
   ngOnInit() {
     this.feedback();
-    this.getLabs();
-  }
-
-  //Récupération de la liste des labos
-  getLabs() {
-    this._STATS.getLabs().subscribe(
-      data => this.labs = data,
-      err => console.error(err),
-      () => {
-        this.labs = this.labs.cr
-        this.formatDataLabs(this.labs)
-        console.log(this.listingCenter)
-      }
-    );
-  }
-
-  //Formatage données labos pour graphs
-  formatDataLabs(data) {
-    for(var i = 0; i < data.length ; i++) {
-      this.listingCenter = this.listingCenter.concat(
-        {"name": data[i].libelle, "value": data[i].responsable.length}
-      );
-    }
   }
 
   feedback() {
@@ -77,3 +54,4 @@ export class DataComponent implements OnInit {
     }
   }
 }
+ */

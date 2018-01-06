@@ -15,6 +15,9 @@ export class TeamComponent implements OnInit {
   opened = false;
   loading = false;
 
+  //Liste des domaines de recherches
+  search_domain = [];
+
   //Liste des labos
   labs;
 
@@ -22,7 +25,8 @@ export class TeamComponent implements OnInit {
   teams = [];
 
   //Gestion des filtres
-  filter_lab;
+  filter_domain = {name: ''};
+  filter_lab = {id: -1, name: ''};
   isFilter = {
     'lab_name': false,
     'domain': false
@@ -33,18 +37,31 @@ export class TeamComponent implements OnInit {
   ngOnInit() {
     this.feedback();
     this.getLabs();
-    //this.getTeams();
   }
 
   getTeams() {
     for(var i = 0; i<this.labs.length; i++) {
       this._TEAMS.getTeams(this.labs[i].adressegeographique.cri.siid).subscribe(
-        data => this.teams = this.teams.concat(data),
-        err => console.error(err),
-        () => {
-          //console.log(this.teams);
-        }
+        data => {
+          if(!data['msg']) {
+            this.teams = this.teams.concat(data)
+            this.getSearchDomain(data)
+          } else {
+            this.teams = this.teams.concat(data)
+            //console.log("ERROR")
+          }
+          err => console.error(err)
+        },
+        () => {}
       );
+    }
+  }
+
+  getSearchDomain(data) {
+    for(var j = 0; j<Object.keys(data).length; j++) {
+      if( (data[j].domaineDeRecherche !== null) && ( this.search_domain.indexOf(data[j].domaineDeRecherche) == -1 ) ) {
+        this.search_domain = this.search_domain.concat(data[j].domaineDeRecherche)
+      }
     }
   }
 
@@ -67,13 +84,27 @@ export class TeamComponent implements OnInit {
       name: data.adressegeographique.libelle
     }
     this.isFilter['lab_name'] = true;
-    //console.log(this.filter_lab);
+    //console.log(this.filter_lab)
+  }
+
+  selectDomain(data) {
+    this.filter_domain = {
+      name: data
+    }
+    this.isFilter['domain'] = true;
+    //console.log(this.filter_domain)
   }
 
   onCloseLab() {
     this.isFilter['lab_name'] = false;
-    this.filter_lab = {};
-    //console.log(this.isFilter);
+    this.filter_lab = {id: -1, name: ''};
+    //console.log(this.filter_lab)
+  }
+
+  onCloseDomain() {
+    this.isFilter['domain'] = false;
+    this.filter_domain = {name: ''};
+    //console.log(this.filter_domain)
   }
 
   showModal(team) {
@@ -83,7 +114,6 @@ export class TeamComponent implements OnInit {
       data => this.selectedTeam = data,
       err => console.error(err),
       () => {
-        //console.log(this.selectedTeam);
         this.selectedTeamName = this.selectedTeamName.toUpperCase();
         this.opened = true;
         this.loading = false;

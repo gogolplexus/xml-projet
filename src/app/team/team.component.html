@@ -41,25 +41,46 @@
             </button>
             <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
                 <label class="dropdown-header">Liste des domaines</label>
-                <button type="button" *ngFor="let lab of labs" clrDropdownItem>{{ lab.adressegeographique.libelle }}</button>
+                <button type="button" *ngFor="let domain of search_domain" clrDropdownItem (click)="selectDomain(domain)">
+                    {{ domain }}
+                </button>
             </clr-dropdown-menu>
+            <clr-alert *ngIf="isFilter['domain']" (clrAlertClosedChange)="onCloseDomain()">
+                <div class="alert-item">
+                    <span class="alert-text">
+                        Domaine s&eacute;lectionn&eacute; : {{ filter_domain.name }}
+                    </span>
+                </div>
+            </clr-alert>
         </clr-dropdown>
     </div>
 </div>
 
 <div class="row margin-height">
     <div style="width:100%;text-align:center;"><span class="spinner"></span></div>
-    <div *ngIf="isFilter['lab_name']; then filtered else normal"></div>
+    <div *ngIf="isFilter['lab_name'] || isFilter['domain']; then filtered else normal"></div>
     <ng-template #filtered>
         <ng-template ngFor let-team [ngForOf]="teams" let-i="index">
-            <ng-template [ngIf]="team.adressegeographique.cri.siid == filter_lab.id">
+            <ng-template [ngIf]="
+            (
+                ((isFilter['lab_name']) && (team.adressegeographique.cri.siid == filter_lab.id)) 
+                && 
+                ((isFilter['domain']) && (team.domaineDeRecherche == filter_domain.name))
+            )
+            ||
+            (
+                ((isFilter['lab_name']) && (team.adressegeographique.cri.siid == filter_lab.id) && !(isFilter['domain'])) 
+                || 
+                ((isFilter['domain']) && (team.domaineDeRecherche == filter_domain.name) && !(isFilter['lab_name']))
+            )
+            ">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <div class="card">
                         <div class="card-block">
                             <h3 class="card-title">{{ team.sigle }}&nbsp;&nbsp;
                                 <span class="label">
                                     CRI : {{ team.adressegeographique.cri.siid }}
-                                    <a href="..." role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm">
+                                    <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm">
                                         <clr-icon shape="info-circle" size="24"></clr-icon>
                                         <span class="tooltip-content">{{ team.adressegeographique.libelle }}</span>
                                     </a>
@@ -67,6 +88,7 @@
                             </h3>
                             <p class="card-text">Responsable : {{ team.personne.nom }} {{ team.personne.prenom }}</p>
                             <p class="card-text">Adresse : {{ team.adressegeographique.adresse }}</p>
+                            <p class="card-text" *ngIf="team.domaineDeRecherche !== null">Domaine : {{ team.domaineDeRecherche }}</p>
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-sm btn-link" (click)="showModal(team)">Consulter la liste de membres</button>
@@ -85,7 +107,7 @@
                     <h3 class="card-title">{{ team.sigle }}&nbsp;&nbsp;
                         <span class="label">
                             CRI : {{ team.adressegeographique.cri.siid }}
-                            <a href="..." role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm">
+                            <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-sm">
                                 <clr-icon shape="info-circle" size="24"></clr-icon>
                                 <span class="tooltip-content">{{ team.adressegeographique.libelle }}</span>
                             </a>
@@ -93,6 +115,7 @@
                     </h3>
                     <p class="card-text">Responsable : {{ team.personne.nom }} {{ team.personne.prenom }}</p>
                     <p class="card-text">Adresse : {{ team.adressegeographique.adresse }}</p>
+                    <p class="card-text" *ngIf="team.domaineDeRecherche !== null">Domaine : {{ team.domaineDeRecherche }}</p>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-sm btn-link" (click)="showModal(team)">Consulter la liste de membres</button>
@@ -112,14 +135,14 @@
             <clr-dg-column>Nom</clr-dg-column>
             <clr-dg-column>Pr&eacute;nom</clr-dg-column>
             <clr-dg-column>Fonctions</clr-dg-column>
-            <clr-dg-column>Publications</clr-dg-column>
+            <clr-dg-column>Consulter les publications</clr-dg-column>
 
             <clr-dg-row *clrDgItems="let member of selectedTeam.persons">
                 <clr-dg-cell>{{member.person.key}}</clr-dg-cell>
                 <clr-dg-cell>{{member.person.firstname}}</clr-dg-cell>
                 <clr-dg-cell>{{member.person.lastname}}</clr-dg-cell>
                 <clr-dg-cell>{{member.person.moreinfo}}</clr-dg-cell>
-                <clr-dg-cell><a class="btn btn-sm btn-link" title="Consulter les publications de cette personne">Consulter les publications</a></clr-dg-cell>
+                <clr-dg-cell><a class="btn btn-sm btn-link" title="Consulter les publications de cette personne"><clr-icon shape="search"  size="16"></clr-icon></a></clr-dg-cell>
             </clr-dg-row>
 
             <clr-dg-footer>

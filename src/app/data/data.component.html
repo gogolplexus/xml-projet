@@ -1,11 +1,19 @@
-<h1>Data page</h1>
+<div class="row">
+    <div class="col-xs-12"><h1>Donn&eacute;es statistiques &nbsp;&nbsp; <clr-icon shape="bar-chart" size="36"></clr-icon></h1></div>
+</div>
 
 <div class="row">
-    <div class="col-xs-9">
+    <div class="col-xs-12 col-sm-8">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+</div>
+
+<div class="row flex-items-xs-center">
+    <div class="col-xs-12 col-sm-5">
         <div style="height: 500px;">
             <ngx-charts-pie-chart
             [scheme]="colorScheme"
-            [results]="single"
+            [results]="listingCenter"
             [legend]="showLegend"
             [explodeSlices]="explodeSlices"
             [labels]="showLabels"
@@ -13,6 +21,24 @@
             [gradient]="gradient"
             (select)="onSelect($event)">
             </ngx-charts-pie-chart>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-5" style="text-align:center">
+        <h3>Nombre de responsables par centre</h3>
+        <div style="height: 500px;">
+            <ngx-charts-bar-vertical
+                [scheme]="colorScheme"
+                [results]="listingCenter"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="showLegend"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="yAxisLabel"
+                (select)="onSelect($event)">
+            </ngx-charts-bar-vertical>
         </div>
     </div>
 </div>

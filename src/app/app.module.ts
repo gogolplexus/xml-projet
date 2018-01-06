@@ -18,6 +18,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 import {LABS} from './labs/labs-data';
 import {TEAMS} from './team/team-data';
+import {STATS} from './data/stats_data';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, data: { state: 'home' } },
@@ -51,7 +52,7 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule
   ],
-  providers: [LABS, TEAMS],
+  providers: [LABS, TEAMS, STATS],
   bootstrap: [AppComponent]
 })
 

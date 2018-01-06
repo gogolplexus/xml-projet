@@ -3,10 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
  
 const headers = new HttpHeaders();
-//headers.set('Content-Type','application/json');
-/* headers.set('Access-Control-Allow-Headers','application/json');
-headers.set('Access-Control-Allow-Methods','GET, POST, OPTIONS');
-headers.set('Access-Control-Allow-Origin','*'); */
  
 @Injectable()
 export class STATS {
