@@ -19,7 +19,7 @@
             <div style="width:100%;text-align:center;"><span class="spinner"></span></div>
             <clr-stack-block *ngFor="let lab of labs">
                 <clr-stack-label>{{ lab.adressegeographique.libelle }}</clr-stack-label>
-                <clr-stack-content><span [coordlng]="lab.lng" [coordlat]="lab.lat">{{ lab.siid }}</span></clr-stack-content>
+                <clr-stack-content><span>{{ lab.siid }}</span></clr-stack-content>
                 <clr-stack-block>
                     <clr-stack-label>Responsables</clr-stack-label>
                     <clr-stack-content>

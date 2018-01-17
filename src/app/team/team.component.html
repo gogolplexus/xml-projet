@@ -142,7 +142,7 @@
                 <clr-dg-cell>{{member.person.firstname}}</clr-dg-cell>
                 <clr-dg-cell>{{member.person.lastname}}</clr-dg-cell>
                 <clr-dg-cell>{{member.person.moreinfo}}</clr-dg-cell>
-                <clr-dg-cell><a class="btn btn-sm btn-link" title="Consulter les publications de cette personne"><clr-icon shape="search"  size="16"></clr-icon></a></clr-dg-cell>
+                <clr-dg-cell><a routerLink="/publications/{{member.person.key}}" class="btn btn-sm btn-link" title="Consulter les publications de cette personne"><clr-icon shape="search"  size="16"></clr-icon></a></clr-dg-cell>
             </clr-dg-row>
 
             <clr-dg-footer>
