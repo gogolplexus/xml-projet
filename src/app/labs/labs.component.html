@@ -53,7 +53,7 @@
 
     </div>
     <div class="col-xs-12 col-sm-12 col-md-7 offset-md-1">
-        <agm-map [latitude]="init_lat" [longitude]="init_lng">
+        <agm-map [latitude]="init_lat" [longitude]="init_lng" [fitBounds]="latlngbounds">
             <agm-marker *ngFor="let lab of labs" [latitude]="lab.adressegeographique.latitude" [longitude]="lab.adressegeographique.longitude">
                 <agm-snazzy-info-window [maxWidth]="300" [closeWhenOthersOpen]="true">
                     <ng-template>

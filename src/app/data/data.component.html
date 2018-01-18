@@ -8,37 +8,48 @@
     </div>
 </div>
 
-<div class="row flex-items-xs-center">
-    <div class="col-xs-12 col-sm-5">
-        <div style="height: 500px;">
-            <ngx-charts-pie-chart
+<div class="row flex-items-xs-around" style="text-align:center; height: 500px;">
+    <div class="col-xs-12 col-sm-12 col-md-5">
+        <h2>Répartition par domaines de recherches</h2>
+        <br>
+        <ngx-charts-heat-map
             [scheme]="colorScheme"
-            [results]="listingCenter"
-            [legend]="showLegend"
-            [explodeSlices]="explodeSlices"
-            [labels]="showLabels"
-            [doughnut]="doughnut"
-            [gradient]="gradient"
+            [results]="teams"
+            [legend]="showLegendDomaine"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabelDomaine"
             (select)="onSelect($event)">
-            </ngx-charts-pie-chart>
-        </div>
+        </ngx-charts-heat-map>
     </div>
-    <div class="col-xs-12 col-sm-5" style="text-align:center">
-        <h3>Nombre de responsables par centre</h3>
-        <div style="height: 500px;">
-            <ngx-charts-bar-vertical
-                [scheme]="colorScheme"
-                [results]="listingCenter"
-                [gradient]="gradient"
-                [xAxis]="showXAxis"
-                [yAxis]="showYAxis"
-                [legend]="showLegend"
-                [showXAxisLabel]="showXAxisLabel"
-                [showYAxisLabel]="showYAxisLabel"
-                [xAxisLabel]="xAxisLabel"
-                [yAxisLabel]="yAxisLabel"
-                (select)="onSelect($event)">
-            </ngx-charts-bar-vertical>
-        </div>
+    <div class="col-xs-12 col-sm-12 col-md-5">
+        <h2>Nombre d'équipes par centre</h2>
+        <br>
+        <ngx-charts-bar-vertical
+            [scheme]="colorScheme"
+            [results]="labs"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            (select)="onSelect($event)">
+        </ngx-charts-bar-vertical> 
     </div>
 </div>
+<!-- <div class="row">
+    <div style="height: 500px;">
+        <ngx-charts-pie-chart
+        [scheme]="colorScheme"
+        [results]="single"
+        [legend]="showLegend"
+        [explodeSlices]="explodeSlices"
+        [labels]="showLabels"
+        [doughnut]="doughnut"
+        [gradient]="gradient"
+        (select)="onSelect($event)">
+        </ngx-charts-pie-chart>
+    </div>
+</div> -->

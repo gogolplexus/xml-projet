@@ -17,19 +17,23 @@ export class TeamComponent implements OnInit {
 
   //Liste des domaines de recherches
   search_domain = [];
+  search_theme = [];
 
   //Liste des labos
   labs;
+  isLoadFinish = false;
 
   //Liste des équipes
   teams = [];
 
   //Gestion des filtres
   filter_domain = {name: ''};
+  filter_theme = {name: ''};
   filter_lab = {id: -1, name: ''};
   isFilter = {
     'lab_name': false,
-    'domain': false
+    'domain': false,
+    'theme': false
   };
 
   constructor(private router:Router, private _LABS: LABS, private _TEAMS: TEAMS) {}
@@ -37,6 +41,14 @@ export class TeamComponent implements OnInit {
   ngOnInit() {
     this.feedback();
     this.getLabs();
+  }
+
+  ngAfterViewChecked() {
+    if( (this.teams.length != 0) && !(this.isLoadFinish) ) {
+      var spinner = document.getElementsByClassName("spinner");
+      spinner[0].outerHTML = "";
+      this.isLoadFinish = true;
+    }
   }
 
   getTeams() {
@@ -48,10 +60,9 @@ export class TeamComponent implements OnInit {
             this.getSearchDomain(data)
           } else {
             this.teams = this.teams.concat(data)
-            //console.log("ERROR")
           }
-          err => console.error(err)
         },
+        err => console.error(err),
         () => {}
       );
     }
@@ -62,6 +73,10 @@ export class TeamComponent implements OnInit {
       if( (data[j].domaineDeRecherche !== null) && ( this.search_domain.indexOf(data[j].domaineDeRecherche) == -1 ) ) {
         this.search_domain = this.search_domain.concat(data[j].domaineDeRecherche)
       }
+
+      if( (data[j].themeDeRecherche !== null) && ( this.search_theme.indexOf(data[j].themeDeRecherche) == -1 ) ) {
+        this.search_theme = this.search_theme.concat(data[j].themeDeRecherche)
+      }
     }
   }
 
@@ -70,10 +85,8 @@ export class TeamComponent implements OnInit {
       data => this.labs = data,
       err => console.error(err),
       () => {
-        this.labs = this.labs.cr,
+        this.labs = this.labs.cr;
         this.getTeams();
-        var spinner = document.getElementsByClassName("spinner");
-        spinner[0].outerHTML = "";
       }
     );
   }
@@ -95,16 +108,26 @@ export class TeamComponent implements OnInit {
     //console.log(this.filter_domain)
   }
 
+  selectTheme(data) {
+    this.filter_theme = {
+      name: data
+    }
+    this.isFilter['theme'] = true;
+  }
+
   onCloseLab() {
     this.isFilter['lab_name'] = false;
     this.filter_lab = {id: -1, name: ''};
-    //console.log(this.filter_lab)
   }
 
   onCloseDomain() {
     this.isFilter['domain'] = false;
     this.filter_domain = {name: ''};
-    //console.log(this.filter_domain)
+  }
+
+  onCloseTheme() {
+    this.isFilter['theme'] = false;
+    this.filter_theme = {name: ''};
   }
 
   showModal(team) {

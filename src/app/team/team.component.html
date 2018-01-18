@@ -11,10 +11,10 @@
 </div>
 
 <div class="row flex-items-xs-middle">
-    <div class="col-xs-12 col-sm-12 col-md-4">
+    <div class="col-xs-12 col-sm-12 col-md-3">
         <h3>Filtres disponibles :</h3>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="col-xs-12 col-sm-6 col-md-3">
         <clr-dropdown style="margin-top: 24px;">
             <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
                 Nom de centre de recherche
@@ -33,7 +33,7 @@
             </clr-alert>
         </clr-dropdown>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="col-xs-12 col-sm-6 col-md-3">
         <clr-dropdown style="margin-top: 24px;">
             <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
                 Domaine de recherche
@@ -54,24 +54,72 @@
             </clr-alert>
         </clr-dropdown>
     </div>
+    <div class="col-xs-12 col-sm-12 col-md-3">
+        <clr-dropdown style="margin-top: 24px;">
+            <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
+                Th&egrave;me de recherche
+                <clr-icon shape="caret down"></clr-icon>
+            </button>
+            <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
+                <label class="dropdown-header">Liste des th&egrave;mes</label>
+                <button type="button" *ngFor="let theme of search_theme" clrDropdownItem (click)="selectTheme(theme)">
+                    {{ theme }}
+                </button>
+            </clr-dropdown-menu>
+            <clr-alert *ngIf="isFilter['theme']" (clrAlertClosedChange)="onCloseTheme()">
+                <div class="alert-item">
+                    <span class="alert-text">
+                        Domaine s&eacute;lectionn&eacute; : {{ filter_theme.name }}
+                    </span>
+                </div>
+            </clr-alert>
+        </clr-dropdown>
+    </div>
 </div>
 
 <div class="row margin-height">
     <div style="width:100%;text-align:center;"><span class="spinner"></span></div>
-    <div *ngIf="isFilter['lab_name'] || isFilter['domain']; then filtered else normal"></div>
+    <div *ngIf="isFilter['lab_name'] || isFilter['domain'] || isFilter['theme']; then filtered else normal"></div>
     <ng-template #filtered>
         <ng-template ngFor let-team [ngForOf]="teams" let-i="index">
             <ng-template [ngIf]="
             (
-                ((isFilter['lab_name']) && (team.adressegeographique.cri.siid == filter_lab.id)) 
-                && 
-                ((isFilter['domain']) && (team.domaineDeRecherche == filter_domain.name))
+                (
+                    ((isFilter['lab_name']) && (team.adressegeographique.cri.siid == filter_lab.id)) 
+                    && 
+                    ((isFilter['domain']) && (team.domaineDeRecherche == filter_domain.name))
+                    && 
+                    ((isFilter['theme']) && (team.themeDeRecherche == filter_theme.name))
+                ) ||
+                (
+                    (!(isFilter['lab_name'])) 
+                    && 
+                    ((isFilter['domain']) && (team.domaineDeRecherche == filter_domain.name))
+                    && 
+                    ((isFilter['theme']) && (team.themeDeRecherche == filter_theme.name))
+                ) ||
+                (
+                    ((isFilter['lab_name']) && (team.adressegeographique.cri.siid == filter_lab.id)) 
+                    && 
+                    (!(isFilter['domain']))
+                    && 
+                    ((isFilter['theme']) && (team.themeDeRecherche == filter_theme.name))
+                ) ||
+                (
+                    ((isFilter['lab_name']) && (team.adressegeographique.cri.siid == filter_lab.id)) 
+                    && 
+                    ((isFilter['domain']) && (team.domaineDeRecherche == filter_domain.name))
+                    && 
+                    (!(isFilter['theme']))
+                )
             )
             ||
             (
-                ((isFilter['lab_name']) && (team.adressegeographique.cri.siid == filter_lab.id) && !(isFilter['domain'])) 
-                || 
-                ((isFilter['domain']) && (team.domaineDeRecherche == filter_domain.name) && !(isFilter['lab_name']))
+                ((isFilter['lab_name']) && (team.adressegeographique.cri.siid == filter_lab.id) && !(isFilter['domain']) && !(isFilter['theme']))
+                ||
+                ((isFilter['domain']) && (team.domaineDeRecherche == filter_domain.name) && !(isFilter['lab_name']) && !(isFilter['theme']))
+                ||
+                ((isFilter['theme']) && (team.themeDeRecherche == filter_theme.name) && !(isFilter['lab_name']) && !(isFilter['domain']))
             )
             ">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -89,6 +137,7 @@
                             <p class="card-text">Responsable : {{ team.personne.nom }} {{ team.personne.prenom }}</p>
                             <p class="card-text">Adresse : {{ team.adressegeographique.adresse }}</p>
                             <p class="card-text" *ngIf="team.domaineDeRecherche !== null">Domaine : {{ team.domaineDeRecherche }}</p>
+                            <p class="card-text" *ngIf="team.themeDeRecherche !== null">Th&egrave;me : {{ team.themeDeRecherche }}</p>
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-sm btn-link" (click)="showModal(team)">Consulter la liste de membres</button>
@@ -116,6 +165,7 @@
                     <p class="card-text">Responsable : {{ team.personne.nom }} {{ team.personne.prenom }}</p>
                     <p class="card-text">Adresse : {{ team.adressegeographique.adresse }}</p>
                     <p class="card-text" *ngIf="team.domaineDeRecherche !== null">Domaine : {{ team.domaineDeRecherche }}</p>
+                    <p class="card-text" *ngIf="team.themeDeRecherche !== null">Th&egrave;me : {{ team.themeDeRecherche }}</p>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-sm btn-link" (click)="showModal(team)">Consulter la liste de membres</button>
