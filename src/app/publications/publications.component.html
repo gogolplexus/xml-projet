@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-xs-12">
+      <h1>{{havePub ? "Publications de " + name : "Publications introuvables"}} &nbsp;&nbsp; <clr-icon shape="book" size="36"></clr-icon></h1>
+  </div>
+</div>
+
+<div *ngIf="havePub; then thenBlock; else elseBlock">this is ignored</div>
+<ng-template #thenBlock>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+        <p>ID : {{id}}</p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #elseBlock>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+        <p>Cette personne n'a aucune publications</p>
+    </div>
+  </div>
+</ng-template>
