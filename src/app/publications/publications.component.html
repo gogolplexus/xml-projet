@@ -1,22 +1,65 @@
-<div class="row">
-  <div class="col-xs-12">
-      <h1>{{havePub ? "Publications de " + name : "Publications introuvables"}} &nbsp;&nbsp; <clr-icon shape="book" size="36"></clr-icon></h1>
-  </div>
-</div>
-
-<div *ngIf="havePub; then thenBlock; else elseBlock">this is ignored</div>
-<ng-template #thenBlock>
+<div *ngIf="isLoadFinish; then loaded; else loading">this is ignored</div>
+<ng-template #loaded>
   <div class="row">
-    <div class="col-xs-12 col-sm-8">
-        <p>ID : {{id}}</p>
+    <div class="col-xs-12">
+        <h1>{{havePub ? "Publications de " + name : "Publications introuvables"}} &nbsp;&nbsp; <clr-icon shape="book" size="36"></clr-icon></h1>
     </div>
   </div>
+  
+  <div *ngIf="havePub; then thenBlock; else elseBlock">this is ignored</div>
+  <ng-template #thenBlock>
+    <div class="row">
+      <div class="col-xs-12 col-sm-8">
+          <h3>ID : {{id}}</h3>
+      </div>
+    </div>
+
+    <div class="row" *ngFor="let pub of publi" style="margin-bottom: 50px;">
+      <div class="col-xs-12 col-sm-12">
+          <p><strong>Titre :</strong> {{pub.biblStruct.analytic.title.content}}</p>
+          <p><strong>ID de l'&eacute;quipe :</strong> {{pub.biblStruct.id}}</p>
+          <div *ngIf="pub.biblStruct.identifiant != null; then thenIdOuvBlock;">this is ignored</div>
+          <ng-template #thenIdOuvBlock>
+            <p><strong>ID du rapport :</strong></p>
+            <ul class="list">
+                <div *ngIf="pub.biblStruct.identifiant.length != null; then thenLiOuvBlock; else elseLiOuvBlock">this is ignored</div>
+                <ng-template #thenLiOuvBlock>
+                  <li *ngFor="let ids of pub.biblStruct.identifiant">{{ids.type}} id : {{ids.value}}</li>
+                </ng-template>
+                <ng-template #elseLiOuvBlock>
+                  <li>{{pub.biblStruct.identifiant.type}} id : {{pub.biblStruct.identifiant.value}}</li>
+                </ng-template>
+            </ul>
+          </ng-template>
+          <p><strong>Auteurs :</strong></p>
+          <ul class="list">
+            <div *ngIf="pub.biblStruct.analytic.author.persName.length != null; then thenBlock; else elseBlock">this is ignored</div>
+            <ng-template #thenBlock>
+              <li *ngFor="let auteur of pub.biblStruct.analytic.author.persName">{{auteur.foreName}} {{auteur.surname}}</li>
+            </ng-template>
+            <ng-template #elseBlock>
+              <li>{{pub.biblStruct.analytic.author.persName.foreName}} {{pub.biblStruct.analytic.author.persName.surname}}</li>
+            </ng-template>
+          </ul>
+          <p><strong>Ann&eacute;e : </strong> {{pub.biblStruct.monogr.imprint.dateStruct.year}}</p>
+          <p *ngIf="pub.biblStruct.monogr.imprint.ref != null"><strong>Liens Archives-Ouvertes :</strong> <a [href]="pub.biblStruct.monogr.imprint.ref['xlink:href']" [title]="pub.biblStruct.analytic.title.content" target="_blank">{{pub.biblStruct.analytic.title.content}}</a></p>
+      </div>
+    </div>
+  </ng-template>
+  
+  <ng-template #elseBlock>
+    <div class="row">
+      <div class="col-xs-12 col-sm-8">
+          <p>Cette personne n'a aucune publications</p>
+      </div>
+    </div>
+  </ng-template>
 </ng-template>
 
-<ng-template #elseBlock>
+<ng-template #loading>
   <div class="row">
-    <div class="col-xs-12 col-sm-8">
-        <p>Cette personne n'a aucune publications</p>
+    <div class="col-xs-12 col-sm-12">
+      <div style="width:100%;text-align:center;"><span class="spinner"></span></div>
     </div>
   </div>
 </ng-template>

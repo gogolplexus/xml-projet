@@ -12,7 +12,8 @@ export class PublicationsComponent implements OnInit {
   public id: string;
   public name: string;
   public havePub: boolean;
-  private publi;
+  public publi;
+  public isLoadFinish: boolean = false;
 
   constructor(private route: ActivatedRoute, private _PUBLICATIONS: PUBLICATIONS) {}
   
@@ -27,22 +28,31 @@ export class PublicationsComponent implements OnInit {
       err => console.error(err),
       () => {
         this.publi = this.publi.publications;
-        console.log(this.publi);
+        //console.log(this.publi);
         if(this.publi.length == 0) {
           this.name = "undefined";
           this.havePub = false;
+          this.isLoadFinish = true;
         } else {
           this.havePub = true;
+          this.isLoadFinish = true;
+          //this.convertObjectToArray();
           this.getPubName(this.publi[0].biblStruct.analytic.author.persName);
         }
       }
     );
   }
 
+  convertObjectToArray() {
+    for(let i = 0; i < this.publi.length; i++) {
+      this.publi[i].biblStruct.analytic.author.persName = [this.publi[i].biblStruct.analytic.author.persName];
+    }
+  }
+
   getPubName(authors) {
     for(var i = 0; i < authors.length; i++) {
       if(authors[i].key == this.id) {
-        this.name = authors[i].surname + " " + authors[i].foreName;
+        this.name = authors[i].foreName + " " + authors[i].surname;
       }
     }
   }
