@@ -1,27 +1,15 @@
 # XmlProject
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.5.
+Interface client pour le projet XML 2017 / 2018, réalisée avec Angular 5.
 
-## Development server
+## Test / Démarrage de l'interface
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Pour lancer l'application, il faut d'abord s'assurer que le serveur est déjà actif. Ensuite, il faut ouvrir un terminal et se placer à l'intérieur du dossier contenant l'interface, puis executer la commande `ng serve` ou `npm start`.
 
-## Code scaffolding
+Enfin, il faudra ouvrir un navigateur - récent - et naviquer vers l'URL `http://localhost:4200/`.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Composition de l&apos;&eacute;quipe
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+ALA Valentin
+BOURDIER Idryss
+DIOP Fatou
