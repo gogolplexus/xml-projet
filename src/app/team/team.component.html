@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-8">
-        <p>Vous trouverez sur cette page la liste compl&egrave;te des centres de recherches. Plusieurs filtres sont &agrave; votre disposition pour filtrer les r&eacute;sultats. La liste des membres est consultable pour chaque &eacute;quipe affich&eacute;e (si des donn&eacute;es sont disponibles). Vous pourrez consulter la liste des publications par personne en cliquant sur la loupe dans le tableau des membres d&apos;une &eacute;quipe.</p>
+        <p>Vous trouverez sur cette page la liste compl&egrave;te des centres de recherches. Plusieurs filtres sont &agrave; votre disposition pour filtrer les r&eacute;sultats. La liste des membres est consultable pour chaque &eacute;quipe affich&eacute;e (si des donn&eacute;es sont disponibles). Vous pourrez consulter la liste des publications par personne en cliquant sur la loupe dans le tableau des membres d&apos;une &eacute;quipe. Aussi, vous trouverez un rapport au format PDF pour chaque &eacute;quipe.</p>
     </div>
 </div>
 
@@ -141,7 +141,8 @@
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-sm btn-link" (click)="showModal(team)">Consulter la liste de membres</button>
-                            <span *ngIf="loading" class="spinner spinner-inline"></span>
+                            <span *ngIf="loading" class="spinner spinner-inline"></span><br>
+                            <a [href]="'http://91.134.122.212:9991/rapport-pdf?id=' + team.sigle | lowercase" [title]="'Rapport de l\'équipe ' + team.sigle" target="_blank">Rapport de l&apos;&eacute;quipe {{team.sigle}}</a>
                         </div>
                     </div>
                 </div>
@@ -169,7 +170,8 @@
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-sm btn-link" (click)="showModal(team)">Consulter la liste de membres</button>
-                    <span *ngIf="loading" class="spinner spinner-inline"></span>
+                    <span *ngIf="loading" class="spinner spinner-inline"></span><br>
+                    <a [href]="'http://91.134.122.212:9991/rapport-pdf?id=' + team.sigle | lowercase" [title]="'Rapport de l\'équipe ' + team.sigle" target="_blank">Rapport de l&apos;&eacute;quipe {{team.sigle}}</a>
                 </div>
             </div>
         </div>
